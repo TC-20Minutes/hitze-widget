@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>So heiss ist es bei Ihnen – 20 Minuten</title>
+<style>
+/*__FONT_CSS__*/
+
+:root{
+  /* 20-Minuten-Markenfarben */
+  --blue:#2659FF;
+  --mid-blue:#0D2880;
+  --dark-blue:#07184D;
+  --red:#CA0016;
+  --orange:#FFA136;
+  --yellow:#FFD23E;
+
+  /* Light-Theme-Rollen */
+  --bg:#ffffff;
+  --card:#ffffff;
+  --field:#EDF4FF;        /* Cool Grey – Eingaben, Zeilen */
+  --field-2:#f4f8ff;
+  --ink:#07184D;          /* Dark Blue – Text */
+  --ink-2:#2a3b6b;        /* Sekundärtext, ≥4.5:1 */
+  --muted:#586590;        /* gedämpft, ≥4.5:1 auf weiss */
+  --link:#1d4ed8;
+  --accent:#2659FF;       /* Fokus, Markenakzent */
+  --kicker:#CA0016;
+  --line:rgba(7,24,77,.10);
+  --shadow:0 1px 2px rgba(7,24,77,.04),0 10px 30px -18px rgba(7,24,77,.22);
+  --me:rgba(38,89,255,.06);
+
+  --r:18px;
+  --r-sm:12px;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0a1022;
+    --card:#0f1730;
+    --field:#18223f;
+    --field-2:#141d38;
+    --ink:#eaf0ff;
+    --ink-2:#c2cdee;
+    --muted:#94a4cc;        /* ≥4.5:1 auf --card */
+    --link:#7d9bff;
+    --accent:#5b82ff;
+    --kicker:#ff5d6c;       /* aufgehellt für Lesbarkeit auf dunkel */
+    --line:rgba(150,170,220,.16);
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -22px rgba(0,0,0,.7);
+    --me:rgba(91,130,255,.14);
+  }
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg)}
+body{
+  font-family:'Matter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  line-height:1.45;
+  font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:620px;margin:0 auto;padding:22px 16px 30px}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+/* Kopf */
+.head{margin:0 0 20px}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-weight:600;font-size:12.5px;letter-spacing:.03em;
+  color:var(--kicker);margin:0 0 12px;
+}
+.kicker .dot{width:8px;height:8px;border-radius:50%;background:currentColor;
+  box-shadow:0 0 0 0 currentColor;animation:pulse 2s var(--ease) infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 55%,transparent)}
+  70%{box-shadow:0 0 0 7px transparent}
+  100%{box-shadow:0 0 0 0 transparent}
+}
+h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8px;
+  letter-spacing:-.02em;text-wrap:balance}
+.sub{color:var(--ink-2);font-size:15px;margin:0;max-width:46ch;text-wrap:pretty}
+
+/* Karten */
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+}
+.card + .card{margin-top:14px}
+.pad{padding:18px 20px}
+
+/* Modus-Umschalter */
+.modes{display:flex;gap:4px;background:var(--field);padding:4px;border-radius:999px;margin:0 0 16px}
+.modes button{
+  flex:1;border:0;background:transparent;cursor:pointer;
+  font-family:inherit;font-weight:600;font-size:13.5px;color:var(--ink-2);
+  padding:9px 10px;border-radius:999px;transition:background .2s var(--ease),color .2s,box-shadow .2s;
+}
+.modes button[aria-pressed="true"]{background:var(--card);color:var(--ink);
+  box-shadow:0 1px 3px rgba(7,24,77,.16)}
+
+/* Suche */
+.search{position:relative}
+.search input{
+  width:100%;font-family:inherit;font-size:16px;font-weight:500;color:var(--ink);
+  background:var(--field);border:1.5px solid transparent;border-radius:var(--r-sm);
+  padding:15px 48px 15px 16px;outline:none;transition:border-color .2s,background .2s,box-shadow .2s;
+}
+.search input::placeholder{color:var(--muted);font-weight:400}
+.search input:focus{border-color:var(--accent);background:var(--card);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 14%,transparent)}
+.search .ic{position:absolute;right:15px;top:26px;transform:translateY(-50%);
+  width:20px;height:20px;color:var(--muted);pointer-events:none;transition:color .2s}
+.search input:focus ~ .ic{color:var(--accent)}
+
+/* Ergebnis – integriertes Panel der Suchkarte (keine Karte-in-Karte) */
+.result{
+  margin:16px -20px -18px;padding:0 20px;max-height:0;overflow:hidden;
+  border-top:1px solid transparent;
+  transition:max-height .45s var(--ease),padding .45s var(--ease),border-color .3s,background .4s;
+}
+.result.show{max-height:280px;padding:18px 20px 20px;border-top-color:var(--line);
+  border-radius:0 0 var(--r) var(--r)}
+.result .top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.result .place{font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance}
+.result .stn{font-size:13.5px;color:var(--ink-2);margin:0;line-height:1.45}
+.result .stn b{font-weight:600}
+.result .temp{font-weight:700;font-size:40px;line-height:.95;white-space:nowrap;letter-spacing:-.03em}
+.result .temp .u{font-size:24px}
+.result .temp small{font-size:13px;font-weight:600;display:block;text-align:right;margin-top:6px;color:var(--muted)}
+.result .meta{margin-top:16px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+.result .meta b{color:var(--ink-2);font-weight:600}
+.result .meta .far{color:var(--kicker);font-weight:600;width:100%}
+
+.note{font-size:14px;color:var(--muted);margin:14px 0 0}
+.note.err{color:var(--kicker);font-weight:500}
+
+/* Aggregat + Rangliste in EINER Karte, durch Trenner geteilt */
+.sec-label{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 12px;letter-spacing:-.005em}
+.agg-text{font-size:17px;line-height:1.4;margin:0 0 16px;font-weight:500;color:var(--ink-2);text-wrap:pretty}
+.agg-text b{font-weight:700;color:var(--ink)}
+.agg-text .chip{display:inline-block;width:13px;height:13px;border-radius:3px;
+  vertical-align:-1px;margin:0 1px;background:var(--orange)}
+.bar{height:12px;border-radius:999px;background:var(--field);overflow:hidden}
+.bar > i{display:block;height:100%;border-radius:999px;width:0;
+  background:linear-gradient(90deg,var(--yellow),var(--orange) 55%,var(--red));
+  transition:width 1s var(--ease)}
+.bar-scale{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:8px;font-weight:500}
+
+.divider{height:1px;background:var(--line);margin:20px 0}
+
+.rows{display:flex;flex-direction:column;gap:6px}
+.row{display:grid;grid-template-columns:24px 1fr auto;align-items:center;gap:12px;
+  padding:11px 14px;border-radius:var(--r-sm);background:var(--field);
+  opacity:0;transform:translateY(8px);animation:rowIn .5s var(--ease) forwards}
+@keyframes rowIn{to{opacity:1;transform:none}}
+.row.me{background:var(--me);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.row .pos{font-weight:700;font-size:14px;color:var(--muted);text-align:center}
+.row.me .pos{color:var(--accent)}
+.row .name{min-width:0}
+.row .name b{display:block;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .name span{font-size:12.5px;color:var(--muted)}
+.row .val{font-weight:700;font-size:15.5px;white-space:nowrap;text-align:center;
+  padding:5px 11px;border-radius:9px;color:#fff;min-width:70px}
+.row-sep{text-align:center;color:var(--muted);font-size:14px;letter-spacing:.15em;padding:1px 0}
+
+/* Fuss */
+.foot{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  margin-top:16px;padding:0 6px;font-size:12.5px;color:var(--muted)}
+.foot a{color:var(--link);text-decoration:none;font-weight:600}
+.foot a:hover{text-decoration:underline}
+.brand-logo{display:block;height:30px;width:auto}
+
+.loading{padding:48px 0;text-align:center;color:var(--muted);font-size:14.5px}
+.spinner{width:24px;height:24px;border:2.5px solid var(--field);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hidden{display:none!important}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;
+    transition-duration:.001ms!important}
+  .row{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <p class="kicker"><span class="dot"></span>Live · Hitze Schweiz</p>
+    <h1>So heiss ist es bei Ihnen</h1>
+    <p class="sub">Postleitzahl eingeben – wir zeigen die Temperatur der nächstgelegenen MeteoSchweiz-Messstation.</p>
+  </header>
+
+  <div class="loading" id="loading" role="status">
+    <div class="spinner"></div>
+    Live-Messwerte werden geladen …
+  </div>
+
+  <main id="content" class="hidden">
+    <!-- Suche + Ergebnis -->
+    <section class="card pad" aria-label="Temperatur an Ihrer PLZ">
+      <div class="modes" role="group" aria-label="Messwert wählen">
+        <button id="m-now" aria-pressed="true">Aktuell</button>
+        <button id="m-max" aria-pressed="false">Höchstwert (24 h)</button>
+      </div>
+      <div class="search">
+        <label for="plz" class="hidden">Postleitzahl</label>
+        <input id="plz" type="text" inputmode="numeric" maxlength="4" autocomplete="postal-code"
+               placeholder="PLZ eingeben, z. B. 8001" aria-describedby="note">
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.2-3.2"></path></svg>
+      </div>
+      <div id="note" class="note hidden" role="status"></div>
+      <div id="result" class="result" aria-live="polite"></div>
+    </section>
+
+    <!-- Aggregat + Rangliste -->
+    <section class="card pad" aria-label="Hitze in der Schweiz">
+      <h2 class="sec-label" id="agg-label">Hitze im Überblick</h2>
+      <p class="agg-text" id="agg-text"></p>
+      <div class="bar"><i id="bar-fill"></i></div>
+      <div class="bar-scale"><span>0</span><span id="bar-max">0 Stationen</span></div>
+
+      <div class="divider"></div>
+
+      <h2 class="sec-label" id="rank-title">Wo es am wärmsten ist</h2>
+      <div class="rows" id="rows"></div>
+    </section>
+
+    <div class="foot">
+      <span>Quelle: <a href="https://www.meteoschweiz.admin.ch" target="_blank" rel="noopener">MeteoSchweiz</a> · <span id="updated">–</span></span>
+      <img class="brand-logo" src="__LOGO__" alt="20 Minuten" width="30" height="30">
+    </div>
+  </main>
+</div>
+
+<script>
+const PLZ = /*__PLZ_DATA__*/;
+const STN = /*__STATION_DATA__*/;
+
+const LAYERS = {
+  max: "https://data.geo.admin.ch/ch.meteoschweiz.messwerte-lufttemperatur-24h-max-1h/ch.meteoschweiz.messwerte-lufttemperatur-24h-max-1h_de.json",
+  now: "https://data.geo.admin.ch/ch.meteoschweiz.messwerte-lufttemperatur-10min/ch.meteoschweiz.messwerte-lufttemperatur-10min_de.json"
+};
+const HEAT_THRESHOLD = 30;
+const REFRESH_MS = 10 * 60 * 1000;
+const REDUCED = matchMedia("(prefers-reduced-motion:reduce)").matches;
+
+let mode = "now";
+let stations = [];
+let lastPlz = null;
+
+// Hitze-Farbskala (Markenfarben) → [r,g,b]
+function heatRGB(t){
+  const stops=[[18,[0,208,255]],[24,[127,196,214]],[27,[255,210,62]],[30,[255,161,54]],[34,[242,88,15]],[38,[202,0,22]]];
+  if(t==null) return [148,164,189];
+  if(t<=stops[0][0]) return stops[0][1];
+  if(t>=stops.at(-1)[0]) return stops.at(-1)[1];
+  for(let i=0;i<stops.length-1;i++){
+    const [a,ca]=stops[i],[b,cb]=stops[i+1];
+    if(t>=a&&t<=b){const k=(t-a)/(b-a);
+      return ca.map((c,j)=>Math.round(c+(cb[j]-c)*k));}
+  }
+  return stops.at(-1)[1];
+}
+const rgb=t=>`rgb(${heatRGB(t).join(",")})`;
+const rgba=(t,a)=>`rgba(${heatRGB(t).join(",")},${a})`;
+const num=v=>v.toLocaleString("de-CH",{minimumFractionDigits:1,maximumFractionDigits:1});
+
+// Kontrast-Helfer (WCAG-Relativluminanz)
+function lum(c){const a=c.map(v=>{v/=255;return v<=.03928?v/12.92:((v+.055)/1.055)**2.4});
+  return .2126*a[0]+.7152*a[1]+.0722*a[2];}
+function ratio(l1,l2){const a=Math.max(l1,l2)+.05,b=Math.min(l1,l2)+.05;return a/b;}
+const isDark=()=>matchMedia("(prefers-color-scheme:dark)").matches;
+// Textfarbe für gefüllte Hitze-Chips: dunkel auf hellen, weiss auf heissen Farben
+const chipText=t=>lum(heatRGB(t))>0.42?"#150f00":"#ffffff";
+// Hitze-Farbe so anpassen, dass die grosse Zahl auf dem Karten-Hintergrund lesbar bleibt (≥4.5:1)
+function legibleHeat(t){
+  let c=heatRGB(t); const dark=isDark(); const bgL=dark?0.03:1.0;
+  for(let i=0;i<14 && ratio(lum(c),bgL)<4.5;i++){
+    c=dark ? c.map(v=>Math.round(v+(255-v)*0.16)) : c.map(v=>Math.round(v*0.82));
+  }
+  return `rgb(${c.join(",")})`;
+}
+
+async function load(){
+  try{
+    const res = await fetch(LAYERS[mode],{cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const geo = await res.json();
+    stations = geo.features.map(f=>{
+      const p=f.properties, id=f.id, meta=STN[id]||[null,null];
+      const raw=p.value;
+      const v=(typeof raw==="number" && raw>-60 && raw<60)?raw:null; // Fehlwerte (z.B. 99999) raus
+      return {id,name:p.station_name,kt:meta[0],
+        alt:meta[1]!=null?meta[1]:(p.altitude?Math.round(parseFloat(p.altitude)):null),
+        e:f.geometry.coordinates[0],n:f.geometry.coordinates[1],val:v};
+    }).filter(s=>s.val!=null);
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
+    render();
+    if(lastPlz) lookup(lastPlz,false);
+  }catch(e){
+    document.getElementById("loading").innerHTML =
+      "Messwerte konnten nicht geladen werden.<br><small>Bitte später erneut versuchen. ("+e.message+")</small>";
+  }
+}
+
+function render(){
+  const sorted=[...stations].sort((a,b)=>b.val-a.val);
+  const total=stations.length;
+  const hot=stations.filter(s=>s.val>=HEAT_THRESHOLD).length;
+  const lbl=document.getElementById("agg-label");
+  const txt=document.getElementById("agg-text");
+  if(mode==="max"){
+    lbl.textContent="Hitze im Überblick · letzte 24 Stunden";
+    txt.innerHTML=`An <b>${hot} von ${total} Messstationen</b> wurde in den letzten 24 Stunden mindestens <span class="chip"></span> ${HEAT_THRESHOLD} °C erreicht.`;
+  }else{
+    lbl.textContent="Hitze im Überblick · aktuell";
+    txt.innerHTML=`An <b>${hot} von ${total} Messstationen</b> werden gerade mindestens <span class="chip"></span> ${HEAT_THRESHOLD} °C gemessen.`;
+  }
+  document.getElementById("bar-fill").style.width=(total?Math.round(hot/total*100):0)+"%";
+  document.getElementById("bar-max").textContent=total+" Stationen";
+
+  document.getElementById("rank-title").textContent =
+    mode==="max" ? "Wo es am wärmsten war" : "Wo es aktuell am wärmsten ist";
+  const rows=document.getElementById("rows");
+  rows.innerHTML="";
+  sorted.slice(0,5).forEach((s,i)=>rows.appendChild(rowEl(i+1,s,false,i)));
+  if(lastPlz){
+    const mine=nearest(lastPlz);
+    if(mine){
+      const rank=sorted.findIndex(s=>s.id===mine.st.id)+1;
+      if(rank>5){
+        const sep=document.createElement("div");
+        sep.className="row-sep";sep.textContent="·  ·  ·";
+        rows.appendChild(sep);
+        rows.appendChild(rowEl(rank,mine.st,true,5));
+      }
+    }
+  }
+  document.getElementById("updated").textContent="aktualisiert "+
+    new Date().toLocaleTimeString("de-CH",{hour:"2-digit",minute:"2-digit"})+" Uhr";
+}
+
+function rowEl(pos,s,me,idx){
+  const el=document.createElement("div");
+  el.className="row"+(me?" me":"");
+  if(!REDUCED) el.style.animationDelay=(idx*55)+"ms";
+  el.innerHTML=`<div class="pos">${pos}</div>
+    <div class="name"><b>${s.name}</b><span>${s.kt||""}${s.alt!=null?" · "+s.alt+" m":""}</span></div>
+    <div class="val" style="background:${rgb(s.val)};color:${chipText(s.val)}">${num(s.val)}°</div>`;
+  return el;
+}
+
+function nearest(plz){
+  const p=PLZ[plz];
+  if(!p) return null;
+  const [e,n,ort,kt]=p;
+  let best=null,bd=Infinity;
+  for(const s of stations){const d=Math.hypot(s.e-e,s.n-n);if(d<bd){bd=d;best=s;}}
+  return best?{st:best,dist:bd/1000,ort,kt}:null;
+}
+
+// Count-up der grossen Zahl
+function countUp(el,to){
+  if(REDUCED){el.firstChild.nodeValue=num(to);return;}
+  const from=0,dur=650,t0=performance.now();
+  function step(now){
+    const k=Math.min(1,(now-t0)/dur);
+    const e=1-Math.pow(1-k,4); // ease-out-quart
+    el.firstChild.nodeValue=num(from+(to-from)*e);
+    if(k<1) requestAnimationFrame(step);
+    else el.firstChild.nodeValue=num(to);
+  }
+  requestAnimationFrame(step);
+}
+
+function lookup(plz,scroll){
+  const note=document.getElementById("note");
+  const result=document.getElementById("result");
+  if(!PLZ[plz]){
+    result.className="result";result.innerHTML="";
+    note.className="note err";note.classList.remove("hidden");
+    note.textContent="Diese PLZ kennen wir nicht – bitte eine gültige Schweizer PLZ eingeben.";
+    return;
+  }
+  note.classList.add("hidden");
+  const r=nearest(plz);
+  if(!r) return;
+  lastPlz=plz;
+  const s=r.st, c=legibleHeat(s.val), far=r.dist>15;
+  result.style.background=rgba(s.val,0.07);
+  result.innerHTML=`
+    <div class="top">
+      <div>
+        <p class="place">${plz} ${r.ort}</p>
+        <p class="stn">Nächste Station: <b>${s.name}</b> · ${r.dist.toFixed(1)} km entfernt</p>
+      </div>
+      <div class="temp" style="color:${c}"><span id="bignum">0,0</span><span class="u">°</span><small>${mode==="max"?"Höchstwert 24 h":"aktuell gemessen"}</small></div>
+    </div>
+    <div class="meta">
+      <span>Station auf <b>${s.alt!=null?s.alt+" m ü. M.":"–"}</b></span>
+      <span>Kanton <b>${s.kt||"–"}</b></span>
+      ${far?'<span class="far">Hinweis: Die nächste Station ist relativ weit entfernt – der Wert kann von Ihrem Ort abweichen.</span>':''}
+    </div>`;
+  result.classList.add("show");
+  countUp(document.getElementById("bignum"),s.val);
+  render();
+  if(scroll) result.scrollIntoView({behavior:REDUCED?"auto":"smooth",block:"nearest"});
+}
+
+const input=document.getElementById("plz");
+input.addEventListener("input",e=>{
+  const v=e.target.value.replace(/\D/g,"").slice(0,4);
+  e.target.value=v;
+  if(v.length===4) lookup(v,false);
+  else{document.getElementById("result").className="result";document.getElementById("note").classList.add("hidden");}
+});
+
+function setMode(m){
+  if(m===mode) return;
+  mode=m;
+  document.getElementById("m-max").setAttribute("aria-pressed",m==="max");
+  document.getElementById("m-now").setAttribute("aria-pressed",m==="now");
+  load();
+}
+document.getElementById("m-max").addEventListener("click",()=>setMode("max"));
+document.getElementById("m-now").addEventListener("click",()=>setMode("now"));
+
+load();
+setInterval(load,REFRESH_MS);
+
+// Höhe an die Elternseite melden (auto-resizing iframe)
+function postHeight(){
+  if(window.parent!==window)
+    parent.postMessage({type:"hitze-widget-height",height:document.documentElement.scrollHeight},"*");
+}
+new ResizeObserver(postHeight).observe(document.body);
+addEventListener("load",postHeight);
+</script>
+</body>
+</html>
