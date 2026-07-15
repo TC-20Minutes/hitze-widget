@@ -1,4 +1,12 @@
-# Hitze-Widget „So heiss ist es bei Ihnen"
+# Hitze-Widget „So heiss ist es bei Ihnen" — v2 (Design-System)
+
+> **v2:** visuell auf das offizielle **20-Minuten-Design-System** ausgerichtet
+> (Graustufen-Grundgerüst + Electricity-Blau/Azure sparsam als Akzent, Eyebrow in
+> Versalien, max. SemiBold, 8px-Radien, Hairlines, schwarze Schatten). Struktur,
+> Funktion, i18n und Tracking sind identisch zur ursprünglichen Version; nur die
+> Design-Tokens (`:root` hell/dunkel) und die Typo wurden angepasst. Light- und
+> Dark-Mode bleiben erhalten.
+
 
 Eingebettetes Widget: Leser:in gibt eine PLZ ein und sieht die **Höchsttemperatur
 (24 h)** der nächstgelegenen MeteoSchweiz-Messstation, plus eine Rangliste und
@@ -6,17 +14,42 @@ eine Übersichts-Statistik. Im 20-Minuten-Design (Matter-Schrift, Markenfarben).
 
 ## Das Wichtigste: kein Backend nötig
 
-`hitze-widget.html` ist **eine einzige, eigenständige Datei** (~250 KB). Darin
-fest eingebettet:
+`hitze-widget.html` (~266 KB) hat **PLZ-Tabelle, Stations-Metadaten und die
+Matter-Schriften fest eingebettet**:
 
 - die **PLZ→Koordinaten**-Tabelle (3190 PLZ, swisstopo)
 - die **Stations-Metadaten** (Kanton + Höhe, MeteoSchweiz)
 - die **Matter-Schriften** (auf Latin gesubsettet, als WOFF2)
 
+Daneben liegen zwei kleine Dateien, die **zusammen mit der HTML** deployt werden
+müssen (relative Pfade):
+
+- `translations/de.json` + `translations/fr.json` – UI-Texte je Sprache
+- `tracking.js` – Analytics-Anbindung (GTM)
+
 Die **Live-Temperaturen** holt das Widget zur Laufzeit direkt im Browser von
 `data.geo.admin.ch` (MeteoSchweiz Open Data, CORS = `*`), alle 10 Minuten neu.
 Es gibt also **nichts zu betreiben** – kein Cron-Job, kein Server, keine
-Datenbank. Einfach die HTML-Datei hosten und per iframe einbinden.
+Datenbank. Einfach die Dateien hosten und per iframe einbinden.
+
+## Sprachen & Mandanten
+
+Das Widget ist mehrsprachig (Deutsch/Französisch). Die Sprache wird über den
+Query-Parameter `?tenant=` gewählt:
+
+- `20min-de` (Standard) → Deutsch
+- `20min-fr` → Französisch
+- `lematin` → Französisch
+
+Ohne oder mit unbekanntem `tenant` fällt das Widget auf `20min-de` (Deutsch)
+zurück. Die Texte kommen aus `translations/<lang>.json`.
+
+## Tracking
+
+`tracking.js` stellt `window.TrackHitze` bereit und schreibt Events in den GTM
+`dataLayer` (Container `GTM-PKTSKJX` via `sst.20min.ch`): `page_view` beim Laden,
+`search_plz` / `search_plz_invalid` bei PLZ-Eingabe, `mode_now` / `mode_max`
+beim Umschalten. `platform_name` richtet sich nach dem `tenant`.
 
 Quelle der Live-Daten:
 - Höchstwert 24 h: `ch.meteoschweiz.messwerte-lufttemperatur-24h-max-1h`
@@ -42,6 +75,12 @@ addEventListener("message", e => {
 
 Das Widget meldet seine Höhe per `postMessage` – mit dem Snippet oben wächst das
 iframe automatisch mit (sonst eine feste `height` setzen).
+
+> **Achtung 20-Minuten-CMS:** Das Embed-`<script>` oben wird vom CMS **gestrippt**,
+> das Auto-Resize läuft dort also nicht. Praktisch: feste Höhe `1340px` setzen
+> (deckt den höchsten Zustand ab, kein Scroll/Abschneiden). Details, gemessene
+> Höhen und der saubere Weg (Haus-Resizer) stehen in
+> [`../IFRAME-EINBETTUNG.md`](../IFRAME-EINBETTUNG.md).
 
 ## Neu bauen (selten nötig)
 

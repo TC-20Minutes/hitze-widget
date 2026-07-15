@@ -1,0 +1,59 @@
+{
+    "page": {
+        "title": "So heiss ist es bei dir – 20 Minuten",
+        "kicker": "Live · Hitze Schweiz",
+        "heading": "So heiss ist es bei dir",
+        "subtitle": "Postleitzahl eingeben und wir zeigen die Temperatur der nächstgelegenen MeteoSchweiz-Messstation."
+    },
+    "loading": "Live-Messwerte werden geladen …",
+    "search": {
+        "sectionAria": "Temperatur an Ihrer PLZ",
+        "label": "Postleitzahl",
+        "placeholder": "PLZ eingeben, z. B. 8001"
+    },
+    "modes": {
+        "groupAria": "Messwert wählen",
+        "now": "Aktuell",
+        "max": "Tageshöchstwert",
+        "nowHint": "aktuell gemessen",
+        "maxHint": "Tageshöchstwert"
+    },
+    "errors": {
+        "unknownPlz": "Diese PLZ kennen wir nicht – bitte eine gültige Schweizer PLZ eingeben.",
+        "loadFailedTitle": "Messwerte konnten nicht geladen werden.",
+        "loadFailedHint": "Bitte später erneut versuchen."
+    },
+    "result": {
+        "nextStation": "Nächste Station:",
+        "kmAway": "km entfernt",
+        "stationAltLabel": "Station auf",
+        "stationAltWith": "{alt} m ü. M.",
+        "stationAltDash": "–",
+        "cantonLabel": "Kanton",
+        "cantonValue": "{kt}",
+        "cantonDash": "–",
+        "far": "Hinweis: Die nächste Station ist relativ weit entfernt – der Wert kann von Ihrem Ort abweichen.",
+        "separator": "·  ·  ·"
+    },
+    "summary": {
+        "titleNow": "Hitze im Überblick · aktuell",
+        "titleMax": "Hitze im Überblick · Tageshöchstwerte",
+        "introNow": "An <b>{count}</b> werden gerade mindestens <span class=\"chip\"></span> {threshold} °C gemessen.",
+        "introMax": "An <b>{count}</b> wurde heute mindestens <span class=\"chip\"></span> {threshold} °C erreicht.",
+        "stations": "Stationen"
+    },
+    "rankings": {
+        "titleNow": "Wo es aktuell am wärmsten ist",
+        "titleMax": "Wo es heute am wärmsten war"
+    },
+    "footer": {
+        "source": "Quelle:",
+        "sourceLink": "MeteoSchweiz",
+        "updated": "aktualisiert {time} Uhr",
+        "brandLogoAlt": "20 Minuten"
+    },
+    "section": {
+        "countryOverview": "Hitze in der Schweiz"
+    },
+    "_lang": "de"
+}

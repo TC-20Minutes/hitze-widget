@@ -1,0 +1,59 @@
+{
+    "page": {
+        "title": "Quelle chaleur fait-il chez toi – 20 minutes",
+        "kicker": "En direct · Canicule en Suisse",
+        "heading": "Quelle chaleur fait-il chez toi",
+        "subtitle": "Indique ton code postal et nous t'affichons la température de la station de mesure de MétéoSuisse la plus proche."
+    },
+    "loading": "Chargement des mesures en direct …",
+    "search": {
+        "sectionAria": "Température à ton code postal",
+        "label": "Code postal",
+        "placeholder": "Indique le NPA, par ex. 1003"
+    },
+    "modes": {
+        "groupAria": "Choisis la mesure",
+        "now": "Actuelle",
+        "max": "Maximum du jour",
+        "nowHint": "mesurée actuellement",
+        "maxHint": "Maximum du jour"
+    },
+    "errors": {
+        "unknownPlz": "Ce NPA n'est pas dans notre base – indique un code postal suisse valide.",
+        "loadFailedTitle": "Les valeurs n'ont pas pu être chargées.",
+        "loadFailedHint": "Réessaie plus tard."
+    },
+    "result": {
+        "nextStation": "Station la plus proche :",
+        "kmAway": "km",
+        "stationAltLabel": "Station à",
+        "stationAltWith": "{alt} m d'altitude",
+        "stationAltDash": "–",
+        "cantonLabel": "Canton",
+        "cantonValue": "{kt}",
+        "cantonDash": "–",
+        "far": "Remarque : la station la plus proche est relativement éloignée – la valeur peut différer de l'endroit où tu te trouves.",
+        "separator": "·  ·  ·"
+    },
+    "summary": {
+        "titleNow": "Canicule en un coup d'œil · actuelle",
+        "titleMax": "Canicule en un coup d'œil · maximums du jour",
+        "introNow": "À <b>{count}</b>, au moins <span class=\"chip\"></span> {threshold} °C sont mesurés actuellement.",
+        "introMax": "À <b>{count}</b>, au moins <span class=\"chip\"></span> {threshold} °C ont été atteints aujourd'hui.",
+        "stations": "Stations"
+    },
+    "rankings": {
+        "titleNow": "Où fait-il le plus chaud actuellement",
+        "titleMax": "Où a-t-il fait le plus chaud aujourd'hui"
+    },
+    "footer": {
+        "source": "Source :",
+        "sourceLink": "MétéoSuisse",
+        "updated": "actualisé {time}",
+        "brandLogoAlt": "20 minutes"
+    },
+    "section": {
+        "countryOverview": "Canicule en Suisse"
+    },
+    "_lang": "fr"
+}

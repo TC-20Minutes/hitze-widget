@@ -4,54 +4,56 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<title>So heiss ist es bei dir – 20 Minuten</title>
+<title id="page-title">So heiss ist es bei dir – 20 Minuten</title>
 <style>
 /*__FONT_CSS__*/
 
 :root{
-  /* 20-Minuten-Markenfarben */
-  --blue:#2659FF;
+  /* 20-Minuten-Markenfarben (Design-System-Tokens) */
+  --blue:#2659FF;         /* Electricity – der eine Akzent */
   --mid-blue:#0D2880;
-  --dark-blue:#07184D;
-  --red:#CA0016;
+  --dark-blue:#07184D;    /* Night */
+  --red:#CA0016;          /* Breaking – nur Fehler/Warnung */
   --orange:#FFA136;
   --yellow:#FFD23E;
 
-  /* Light-Theme-Rollen */
-  --bg:#ffffff;
-  --card:#ffffff;
-  --field:#EDF4FF;        /* Cool Grey – Eingaben, Zeilen */
-  --field-2:#f4f8ff;
-  --ink:#07184D;          /* Dark Blue – Text */
-  --ink-2:#2a3b6b;        /* Sekundärtext, ≥4.5:1 */
-  --muted:#586590;        /* gedämpft, ≥4.5:1 auf weiss */
-  --link:#1d4ed8;
+  /* Light-Theme-Rollen — Graustufen + Ice-Blau (bg-tint) als feiner Brand-Ton */
+  --bg:#EDF4FF;           /* Ice – subtiler gebrandter Canvas (Skill bg-tint) */
+  --card:#ffffff;         /* weisse Fläche – hebt sich vom Ice-Canvas ab */
+  --field:#EDF4FF;        /* Ice – Eingaben/Zeilen als Support-Fläche */
+  --field-2:#F5F8FF;
+  --ink:#202020;          /* Cod Gray – Primärtext */
+  --ink-2:#4C4C4C;        /* Mine Shaft – Sekundärtext, ≥4.5:1 */
+  --muted:#6E6E6E;        /* gedämpft, ≥4.5:1 auf Ice */
+  --link:#2659FF;         /* Electricity */
   --accent:#2659FF;       /* Fokus, Markenakzent */
-  --kicker:#CA0016;
-  --line:rgba(7,24,77,.10);
-  --shadow:0 1px 2px rgba(7,24,77,.04),0 10px 30px -18px rgba(7,24,77,.22);
-  --me:rgba(38,89,255,.06);
+  --kicker:#2659FF;       /* Eyebrow – Blau ist genau hier zuhause */
+  --danger:#CA0016;       /* Breaking-Rot – nur Fehler/Warnung */
+  --line:#E2E8F3;         /* Hairline, minimal kühl – harmoniert mit Ice */
+  --shadow:0 2px 8px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);  /* Skill shadow-2 */
+  --me:rgba(38,89,255,.09);
 
-  --r:18px;
-  --r-sm:12px;
-  --ease:cubic-bezier(.22,1,.36,1);
+  --r:12px;               /* große Karten (radius-lg) */
+  --r-sm:8px;             /* Inputs/Zeilen (radius-md) */
+  --ease:cubic-bezier(.2,0,.2,1);  /* nüchternes Ease-out */
 }
 
 @media (prefers-color-scheme:dark){
   :root{
-    --bg:#0a1022;
-    --card:#0f1730;
-    --field:#18223f;
-    --field-2:#141d38;
-    --ink:#eaf0ff;
-    --ink-2:#c2cdee;
-    --muted:#94a4cc;        /* ≥4.5:1 auf --card */
-    --link:#7d9bff;
-    --accent:#5b82ff;
-    --kicker:#ff5d6c;       /* aufgehellt für Lesbarkeit auf dunkel */
-    --line:rgba(150,170,220,.16);
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px -22px rgba(0,0,0,.7);
-    --me:rgba(91,130,255,.14);
+    --bg:#14181D;           /* kühles Dunkel, minimaler Azure-Unterton */
+    --card:#20262D;         /* kühle Fläche */
+    --field:#2A323B;        /* Azure-getönte Support-Fläche (Skill bg-tint dark) */
+    --field-2:#242B33;
+    --ink:#ffffff;
+    --ink-2:#c9c9c9;
+    --muted:#a3a3a3;        /* Silver – ≥4.5:1 auf --card */
+    --link:#00D0FF;         /* Azure – Dark-Mode-Akzent */
+    --accent:#00D0FF;
+    --kicker:#00D0FF;
+    --danger:#ff5d6c;       /* aufgehelltes Rot für dunkel */
+    --line:#333B44;         /* kühle Hairline */
+    --shadow:0 2px 8px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.4);  /* Skill shadow-2, dunkel */
+    --me:rgba(0,208,255,.16);
   }
 }
 
@@ -72,7 +74,7 @@ body{
 .head{margin:0 0 20px}
 .kicker{
   display:inline-flex;align-items:center;gap:8px;
-  font-weight:600;font-size:12.5px;letter-spacing:.03em;
+  font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--kicker);margin:0 0 12px;
 }
 .kicker .dot{width:8px;height:8px;border-radius:50%;background:currentColor;
@@ -82,14 +84,13 @@ body{
   70%{box-shadow:0 0 0 7px transparent}
   100%{box-shadow:0 0 0 0 transparent}
 }
-h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8px;
+h1{font-size:clamp(30px,8vw,44px);line-height:1.06;font-weight:600;margin:0 0 8px;
   letter-spacing:-.02em;text-wrap:balance}
 .sub{color:var(--ink-2);font-size:15px;margin:0;max-width:46ch;text-wrap:pretty}
 
 /* Karten */
 .card{
   background:var(--card);
-  border:1px solid var(--line);
   border-radius:var(--r);
   box-shadow:var(--shadow);
 }
@@ -104,13 +105,13 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
   padding:9px 10px;border-radius:999px;transition:background .2s var(--ease),color .2s,box-shadow .2s;
 }
 .modes button[aria-pressed="true"]{background:var(--card);color:var(--ink);
-  box-shadow:0 1px 3px rgba(7,24,77,.16)}
+  box-shadow:0 1px 3px rgba(0,0,0,.12)}
 
 /* Suche */
 .search{position:relative}
 .search input{
   width:100%;font-family:inherit;font-size:16px;font-weight:500;color:var(--ink);
-  background:var(--field);border:1.5px solid transparent;border-radius:var(--r-sm);
+  background:var(--field);border:1.5px solid var(--line);border-radius:var(--r-sm);
   padding:15px 48px 15px 16px;outline:none;transition:border-color .2s,background .2s,box-shadow .2s;
 }
 .search input::placeholder{color:var(--muted);font-weight:400}
@@ -128,23 +129,23 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
 .result.show{max-height:280px;padding:18px 20px 20px;border-top-color:var(--line);
   border-radius:0 0 var(--r) var(--r)}
 .result .top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.result .place{font-weight:700;font-size:20px;letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance}
+.result .place{font-weight:600;font-size:20px;letter-spacing:-.01em;margin:0 0 4px;text-wrap:balance}
 .result .stn{font-size:13.5px;color:var(--ink-2);margin:0;line-height:1.45}
 .result .stn b{font-weight:600}
-.result .temp{font-weight:700;font-size:40px;line-height:.95;white-space:nowrap;letter-spacing:-.03em}
+.result .temp{font-weight:600;font-size:40px;line-height:.95;white-space:nowrap;letter-spacing:-.03em}
 .result .temp .u{font-size:24px}
 .result .temp small{font-size:13px;font-weight:600;display:block;text-align:right;margin-top:6px;color:var(--muted)}
 .result .meta{margin-top:16px;font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
 .result .meta b{color:var(--ink-2);font-weight:600}
-.result .meta .far{color:var(--kicker);font-weight:600;width:100%}
+.result .meta .far{color:var(--danger);font-weight:600;width:100%}
 
 .note{font-size:14px;color:var(--muted);margin:14px 0 0}
-.note.err{color:var(--kicker);font-weight:500}
+.note.err{color:var(--danger);font-weight:500}
 
 /* Aggregat + Rangliste in EINER Karte, durch Trenner geteilt */
 .sec-label{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 12px;letter-spacing:-.005em}
 .agg-text{font-size:17px;line-height:1.4;margin:0 0 16px;font-weight:500;color:var(--ink-2);text-wrap:pretty}
-.agg-text b{font-weight:700;color:var(--ink)}
+.agg-text b{font-weight:600;color:var(--ink)}
 .agg-text .chip{display:inline-block;width:13px;height:13px;border-radius:3px;
   vertical-align:-1px;margin:0 1px;background:var(--orange)}
 .bar{height:12px;border-radius:999px;background:var(--field);overflow:hidden}
@@ -161,13 +162,13 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
   opacity:0;transform:translateY(8px);animation:rowIn .5s var(--ease) forwards}
 @keyframes rowIn{to{opacity:1;transform:none}}
 .row.me{background:var(--me);box-shadow:inset 0 0 0 1.5px var(--accent)}
-.row .pos{font-weight:700;font-size:14px;color:var(--muted);text-align:center}
+.row .pos{font-weight:600;font-size:14px;color:var(--muted);text-align:center}
 .row.me .pos{color:var(--accent)}
 .row .name{min-width:0}
 .row .name b{display:block;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .row .name span{font-size:12.5px;color:var(--muted)}
-.row .val{font-weight:700;font-size:15.5px;white-space:nowrap;text-align:center;
-  padding:5px 11px;border-radius:9px;color:#fff;min-width:70px}
+.row .val{font-weight:600;font-size:15.5px;white-space:nowrap;text-align:center;
+  padding:5px 13px;border-radius:999px;color:#fff;min-width:70px}
 .row-sep{text-align:center;color:var(--muted);font-size:14px;letter-spacing:.15em;padding:1px 0}
 
 /* Fuss */
@@ -189,6 +190,75 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
   .row{opacity:1;transform:none}
 }
 </style>
+<script>
+window.dataLayer = window.dataLayer || [];
+(function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+    var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+    j.async = true;
+    j.src = 'https://sst.20min.ch/gtm.js?id=' + i + dl;
+    f.parentNode.insertBefore(j, f);
+})(window, document, 'script', 'dataLayer', 'GTM-PKTSKJX');
+</script>
+<script src="tracking.js"></script>
+<script>
+(function() {
+  var translations = null;
+
+  function t(key) {
+    if (!translations) { return key; }
+    var parts = key.split('.');
+    var val = translations;
+    for (var i = 0; i < parts.length; i++) {
+      if (val == null || typeof val !== 'object') { return key; }
+      val = val[parts[i]];
+    }
+    return typeof val === 'string' ? val : key;
+  }
+
+  function applyTranslations(tr) {
+    translations = tr;
+    var lang = tr._lang || 'de';
+    document.getElementById('page-title').textContent = t('page.title');
+    document.documentElement.lang = lang;
+    document.querySelector('.kicker').innerHTML = '<span class="dot"></span>' + t('page.kicker');
+    document.querySelector('h1').textContent = t('page.heading');
+    document.querySelector('.sub').textContent = t('page.subtitle');
+    document.getElementById('loading-text').textContent = t('loading');
+    document.querySelector('.modes').setAttribute('aria-label', t('modes.groupAria'));
+    document.getElementById('m-now').textContent = t('modes.now');
+    document.getElementById('m-max').textContent = t('modes.max');
+    document.querySelector('label[for="plz"]').textContent = t('search.label');
+    document.getElementById('plz').placeholder = t('search.placeholder');
+    var sections = document.querySelectorAll('section[aria-label]');
+    if (sections[0]) { sections[0].setAttribute('aria-label', t('search.sectionAria')); }
+    if (sections[1]) { sections[1].setAttribute('aria-label', t('section.countryOverview')); }
+    document.getElementById('agg-label').textContent = t('section.countryOverview');
+    var footerSource = document.getElementById('footer-source');
+    if (footerSource) { footerSource.firstChild.nodeValue = t('footer.source') + ' '; }
+    var footerLink = document.getElementById('footer-link');
+    if (footerLink) { footerLink.textContent = t('footer.sourceLink'); }
+    var brandLogo = document.getElementById('brand-logo');
+    if (brandLogo) { brandLogo.alt = t('footer.brandLogoAlt'); }
+    window._hitzeI18nLang = lang;
+  }
+
+  function loadTranslations(langCode) {
+    return fetch('translations/' + langCode + '.json')
+      .then(function(r) {
+        if (!r.ok) { throw new Error('HTTP ' + r.status); }
+        return r.json();
+      })
+      .then(function(tr) { applyTranslations(tr); });
+  }
+
+  window._hitzeI18n = { t, applyTranslations, loadTranslations };
+  window._hitzeI18nLang = 'de';
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -196,11 +266,12 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
     <p class="kicker"><span class="dot"></span>Live · Hitze Schweiz</p>
     <h1>So heiss ist es bei dir</h1>
     <p class="sub">Postleitzahl eingeben und wir zeigen die Temperatur der nächstgelegenen MeteoSchweiz-Messstation.</p>
+    <!-- strings replaced at runtime by _hitzeI18n.applyTranslations -->
   </header>
 
   <div class="loading" id="loading" role="status">
     <div class="spinner"></div>
-    Live-Messwerte werden geladen …
+    <span id="loading-text">Live-Messwerte werden geladen …</span>
   </div>
 
   <main id="content" class="hidden">
@@ -208,7 +279,7 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
     <section class="card pad" aria-label="Temperatur an Ihrer PLZ">
       <div class="modes" role="group" aria-label="Messwert wählen">
         <button id="m-now" aria-pressed="true">Aktuell</button>
-        <button id="m-max" aria-pressed="false">Höchstwert (24 h)</button>
+        <button id="m-max" aria-pressed="false">Tageshöchstwert</button>
       </div>
       <div class="search">
         <label for="plz" class="hidden">Postleitzahl</label>
@@ -235,13 +306,14 @@ h1{font-size:clamp(26px,7vw,34px);line-height:1.06;font-weight:700;margin:0 0 8p
     </section>
 
     <div class="foot">
-      <span>Quelle: <a href="https://www.meteoschweiz.admin.ch" target="_blank" rel="noopener">MeteoSchweiz</a> · <span id="updated">–</span></span>
-      <img class="brand-logo" src="__LOGO__" alt="20 Minuten" width="30" height="30">
+      <span id="footer-source">Quelle: <a id="footer-link" href="https://www.meteoschweiz.admin.ch" target="_blank" rel="noopener">MeteoSchweiz</a> · <span id="updated">–</span></span>
+      <img id="brand-logo" class="brand-logo" src="__LOGO__" alt="20 Minuten" width="30" height="30">
     </div>
   </main>
 </div>
 
 <script>
+const t = (key) => window._hitzeI18n ? window._hitzeI18n.t(key) : key;
 const PLZ = /*__PLZ_DATA__*/;
 const STN = /*__STATION_DATA__*/;
 
@@ -309,7 +381,7 @@ async function load(){
     if(lastPlz) lookup(lastPlz,false);
   }catch(e){
     document.getElementById("loading").innerHTML =
-      "Messwerte konnten nicht geladen werden.<br><small>Bitte später erneut versuchen. ("+e.message+")</small>";
+      t('errors.loadFailedTitle')+"<br><small>"+t('errors.loadFailedHint')+" ("+e.message+")</small>";
   }
 }
 
@@ -320,17 +392,21 @@ function render(){
   const lbl=document.getElementById("agg-label");
   const txt=document.getElementById("agg-text");
   if(mode==="max"){
-    lbl.textContent="Hitze im Überblick · letzte 24 Stunden";
-    txt.innerHTML=`An <b>${hot} von ${total} Messstationen</b> wurde in den letzten 24 Stunden mindestens <span class="chip"></span> ${HEAT_THRESHOLD} °C erreicht.`;
+    lbl.textContent=t("summary.titleMax");
+    txt.innerHTML=t('summary.introMax')
+      .replace('{count}', hot+' von '+total+' '+t('summary.stations'))
+      .replace('{threshold}', HEAT_THRESHOLD);
   }else{
-    lbl.textContent="Hitze im Überblick · aktuell";
-    txt.innerHTML=`An <b>${hot} von ${total} Messstationen</b> werden gerade mindestens <span class="chip"></span> ${HEAT_THRESHOLD} °C gemessen.`;
+    lbl.textContent=t("summary.titleNow");
+    txt.innerHTML=t('summary.introNow')
+      .replace('{count}', hot+' von '+total+' '+t('summary.stations'))
+      .replace('{threshold}', HEAT_THRESHOLD);
   }
   document.getElementById("bar-fill").style.width=(total?Math.round(hot/total*100):0)+"%";
-  document.getElementById("bar-max").textContent=total+" Stationen";
+  document.getElementById("bar-max").textContent=total+" "+t('summary.stations');
 
   document.getElementById("rank-title").textContent =
-    mode==="max" ? "Wo es am wärmsten war" : "Wo es aktuell am wärmsten ist";
+    mode==="max" ? t("rankings.titleMax") : t("rankings.titleNow");
   const rows=document.getElementById("rows");
   rows.innerHTML="";
   sorted.slice(0,5).forEach((s,i)=>rows.appendChild(rowEl(i+1,s,false,i)));
@@ -340,14 +416,15 @@ function render(){
       const rank=sorted.findIndex(s=>s.id===mine.st.id)+1;
       if(rank>5){
         const sep=document.createElement("div");
-        sep.className="row-sep";sep.textContent="·  ·  ·";
+        sep.className="row-sep";sep.textContent=t("result.separator");
         rows.appendChild(sep);
         rows.appendChild(rowEl(rank,mine.st,true,5));
       }
     }
   }
-  document.getElementById("updated").textContent="aktualisiert "+
-    new Date().toLocaleTimeString("de-CH",{hour:"2-digit",minute:"2-digit"})+" Uhr";
+  var locale = (window._hitzeI18nLang === "fr") ? "fr-CH" : "de-CH";
+  document.getElementById("updated").textContent=t('footer.updated').replace('{time}',
+    new Date().toLocaleTimeString(locale,{hour:"2-digit",minute:"2-digit"}));
 }
 
 function rowEl(pos,s,me,idx){
@@ -389,7 +466,7 @@ function lookup(plz,scroll){
   if(!PLZ[plz]){
     result.className="result";result.innerHTML="";
     note.className="note err";note.classList.remove("hidden");
-    note.textContent="Diese PLZ kennen wir nicht – bitte eine gültige Schweizer PLZ eingeben.";
+    note.textContent=t("errors.unknownPlz");
     return;
   }
   note.classList.add("hidden");
@@ -402,14 +479,14 @@ function lookup(plz,scroll){
     <div class="top">
       <div>
         <p class="place">${plz} ${r.ort}</p>
-        <p class="stn">Nächste Station: <b>${s.name}</b> · ${r.dist.toFixed(1)} km entfernt</p>
+        <p class="stn">${t("result.nextStation")} <b>${s.name}</b> · ${r.dist.toFixed(1)} ${t('result.kmAway')}</p>
       </div>
-      <div class="temp" style="color:${c}"><span id="bignum">0,0</span><span class="u">°</span><small>${mode==="max"?"Höchstwert 24 h":"aktuell gemessen"}</small></div>
+      <div class="temp" style="color:${c}"><span id="bignum">0,0</span><span class="u">°</span><small>${mode==="max"?t("modes.maxHint"):t('modes.nowHint')}</small></div>
     </div>
     <div class="meta">
-      <span>Station auf <b>${s.alt!=null?s.alt+" m ü. M.":"–"}</b></span>
-      <span>Kanton <b>${s.kt||"–"}</b></span>
-      ${far?'<span class="far">Hinweis: Die nächste Station ist relativ weit entfernt – der Wert kann von Ihrem Ort abweichen.</span>':''}
+      <span>${t('result.stationAltLabel')} <b>${s.alt!=null?t('result.stationAltWith').replace('{alt}', s.alt):t('result.stationAltDash')}</b></span>
+      <span>${t('result.cantonLabel')} <b>${s.kt||t('result.cantonDash')}</b></span>
+      ${far?`<span class="far">${t('result.far')}</span>`:''}
     </div>`;
   result.classList.add("show");
   countUp(document.getElementById("bignum"),s.val);
@@ -421,13 +498,23 @@ const input=document.getElementById("plz");
 input.addEventListener("input",e=>{
   const v=e.target.value.replace(/\D/g,"").slice(0,4);
   e.target.value=v;
-  if(v.length===4) lookup(v,false);
-  else{document.getElementById("result").className="result";document.getElementById("note").classList.add("hidden");}
+  if(v.length===4){
+    const known=!!PLZ[v];
+    lookup(v,false);
+    if(known){
+      const r=nearest(v);
+      if(r) TrackHitze.trackSearch({plz:v,mode,station:r.st,distanceKm:r.dist});
+    }else{
+      TrackHitze.trackSearchInvalid(v);
+    }
+  }else{document.getElementById("result").className="result";document.getElementById("note").classList.add("hidden");}
 });
 
 function setMode(m){
   if(m===mode) return;
   mode=m;
+  if(m==="max"){TrackHitze.trackModeMax({lastPlz});}
+  else if(m==="now"){TrackHitze.trackModeNow({lastPlz});}
   document.getElementById("m-max").setAttribute("aria-pressed",m==="max");
   document.getElementById("m-now").setAttribute("aria-pressed",m==="now");
   load();
@@ -435,8 +522,23 @@ function setMode(m){
 document.getElementById("m-max").addEventListener("click",()=>setMode("max"));
 document.getElementById("m-now").addEventListener("click",()=>setMode("now"));
 
-load();
-setInterval(load,REFRESH_MS);
+(function() {
+  var validTenants = ['20min-de', '20min-fr', 'lematin'];
+  var params = new URLSearchParams(window.location.search);
+  var tenant = params.get('tenant');
+  if (!tenant || validTenants.indexOf(tenant) === -1) { tenant = '20min-de'; }
+  var lang = (tenant === '20min-de') ? 'de' : 'fr';
+  window._hitzeTenant = tenant;
+  window._hitzeI18n.loadTranslations(lang).then(function() {
+    if (window.TrackHitze) { TrackHitze.trackPageView(); }
+    load();
+    setInterval(load, REFRESH_MS);
+  }).catch(function(error) {
+    document.getElementById('loading').innerHTML =
+      t('errors.loadFailedTitle') + "<br><small>" + t('errors.loadFailedHint') + " (" + error.message + ")</small>";
+    load();
+  });
+})();
 
 // Höhe an die Elternseite melden (auto-resizing iframe)
 function postHeight(){
