@@ -57,30 +57,27 @@ Quelle der Live-Daten:
 
 ## Einbetten
 
-`hitze-widget.html` auf euer CDN / euren Webspace legen und einbinden:
+Deployed via GitHub Pages: `https://tc-20minutes.github.io/hitze-widget/`
 
 ```html
-<iframe id="hitze" src="https://cdn.20min.ch/.../hitze-widget.html"
-        style="width:100%;border:0;height:1100px" loading="lazy"
-        title="So heiss ist es bei Ihnen"></iframe>
-
-<!-- optional: iframe automatisch an Inhaltshöhe anpassen -->
-<script>
-addEventListener("message", e => {
-  if (e.data && e.data.type === "hitze-widget-height")
-    document.getElementById("hitze").style.height = e.data.height + "px";
-});
-</script>
+<iframe src="https://tc-20minutes.github.io/hitze-widget/"
+        title="So heiss ist es bei dir – Hitze Schweiz"
+        loading="lazy"
+        style="width:100%;border:0;height:1080px"></iframe>
 ```
 
-Das Widget meldet seine Höhe per `postMessage` – mit dem Snippet oben wächst das
-iframe automatisch mit (sonst eine feste `height` setzen).
+Feste Höhe **`1080px`** = Default-Höhe des Widgets (vor PLZ-Eingabe). Gewählte
+Strategie: Der Default-Zustand passt genau, **ohne Leerraum**. Gibt die Leser:in
+eine PLZ ein, klappt das Ergebnis-Panel auf und der Inhalt wird höher als das
+iframe → dann erscheint ein **Scrollbalken** (bewusst akzeptiert).
 
-> **Achtung 20-Minuten-CMS:** Das Embed-`<script>` oben wird vom CMS **gestrippt**,
-> das Auto-Resize läuft dort also nicht. Praktisch: feste Höhe `1340px` setzen
-> (deckt den höchsten Zustand ab, kein Scroll/Abschneiden). Details, gemessene
-> Höhen und der saubere Weg (Haus-Resizer) stehen in
-> [`../IFRAME-EINBETTUNG.md`](../IFRAME-EINBETTUNG.md).
+> **Warum keine grössere feste Höhe / kein Auto-Resize?** Der höchste Zustand
+> (PLZ + Fernhinweis) ist je nach Gerätebreite bis ~1530 px – eine feste Höhe,
+> die das abdeckt, liesse im Default zu viel Leerraum. Echtes Auto-Resize
+> (iframe wächst mit) braucht ein Embed-`<script>`, das das 20-Minuten-CMS aber
+> **strippt**. Details & Messungen: [`../IFRAME-EINBETTUNG.md`](../IFRAME-EINBETTUNG.md).
+
+Für die französische Version `?tenant=20min-fr` (oder `?tenant=lematin`) anhängen.
 
 ## Neu bauen (selten nötig)
 
